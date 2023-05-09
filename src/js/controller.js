@@ -73,14 +73,14 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
-  // 1) Add or remove bookmark
+  // 1) Add/remove bookmark
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id);
 
-  //2) Update recipe View
+  // 2) Update recipe view
   recipeView.update(model.state.recipe);
 
-  //3) Render bookmarks
+  // 3) Render bookmarks
   bookmarksView.render(model.state.bookmarks);
 };
 
@@ -89,46 +89,43 @@ const controlBookmarks = function () {
 };
 
 const controlAddRecipe = async function (newRecipe) {
-  // console.log(newRecipe);
   try {
-    //Show loading spinner
+    // Show loading spinner
     addRecipeView.renderSpinner();
 
+    // Upload the new recipe data
     await model.uploadRecipe(newRecipe);
     console.log(model.state.recipe);
 
-    //Render reccipe
+    // Render recipe
     recipeView.render(model.state.recipe);
 
-    //Succes message
+    // Success message
     addRecipeView.renderMessage();
 
-    //Render bookmark view
+    // Render bookmark view
     bookmarksView.render(model.state.bookmarks);
 
-    //Change ID in URL
+    // Change ID in URL
     window.history.pushState(null, '', `#${model.state.recipe.id}`);
 
-    //Close form window
+    // Close form window
     setTimeout(function () {
       addRecipeView.toggleWindow();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (err) {
-    console.error(':C', err);
+    console.error('💥', err);
     addRecipeView.renderError(err.message);
   }
 };
-const newFeature = function () {
-  console.log('Welcome');
-};
+
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
-  recipeView.addHandlerBookmark(controlAddBookmark);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  newFeature();
 };
 init();

@@ -1,0 +1,11 @@
+{
+    "folders": [
+      {
+        "webdav": {
+          "base": "https://semantika-377468.shoparena.pl/webapi/webdav",
+          "username": "adam.sloma@semantika.pl",
+          "password": "788c12ab5abd1f57c2d1012b0f0dc4189add248078903b3551c41a5ebf7c6255"
+        }
+      }
+    ]
+  }
